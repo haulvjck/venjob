@@ -1,0 +1,65 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.css_body {
+  text-align: center;
+}
+.right-text {
+  text-align: right;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+  background-color: #f2f2f2;
+  padding: 25px;
+}
+@media screen and (min-device-width:698px) {
+  div#showgrid {
+    width: 720px;
+    margin: auto;
+  }
+}
+
+div.column {
+  /*border-style: solid;*/
+  /*border-width: 1px;*/
+}
+
+.row {
+  width: 100%;
+  margin: auto;
+}
+
+@media (min-device-width: 698px) {
+  .column {
+    width: 230px;
+    height: 230px;
+    display: inline;
+    float: left;
+  }
+}
+
+.column {
+  width: 230px;
+  height: 230px;
+  margin: auto;
+}

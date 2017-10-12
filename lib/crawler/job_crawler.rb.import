@@ -1,0 +1,104 @@
+require './lib/crawler/crawler.rb'
+
+class CareerJob < Crawler
+
+  BATCH_SIZE = 1
+  NEW_JOB_FILE = 'new_jobs_urls.log'
+  REG_PARTERN = /^https[\w|\W]+careerbuilder.vn[\w|\W]+tim-viec-lam[\w|\W]+.html$/
+  DEFAULT_URL = 'https://careerbuilder.vn/'
+  SALARY = 'salary'
+
+  def urls
+    urls = fetch_logs(NEW_JOB_FILE)
+    return urls if urls.present?
+
+    urls = parse_url(Nokogiri::HTML::Document(open(DEFAULT_URL)), REG_PARTERN)
+
+    urls
+  end
+
+  def crawl
+    url_count = 0
+    crawled_urls = crawled_logs
+    crawl_urls = urls
+
+    while crawl_urls.length > 0 do
+      url = crawl_urls.first
+      crawl_urls.delete(url)
+
+      next if crawled_urls.include?(url)
+
+      url_count += 1
+
+      content = get_page(url)
+      next if content.nil?
+
+      parse_job_info(content)
+
+      crawl_urls += parse_url(content, REG_PARTERN) - crawled_urls
+
+      crawled_urls << url
+      # config Path size (maximum url need to crawl) per crawl time
+      if url_count >  BATCH_SIZE
+        log(crawl_urls, NEW_JOB_FILE)
+        break
+      end
+    end
+
+    log(crawled_urls, NEW_JOB_FILE)
+  end
+
+  def parse_job_info(html_content)
+    return if html_content.nil?
+
+    begin
+      setting = settings['css_tree']
+      job = {}
+
+      parent_content = html_content.search(setting['parent'])
+
+      return if parent_content.empty?
+
+      setting['tags'].each do |set_key, set_val|
+        attr_vals = []
+
+        set_val.split(',').each do |val|
+          css_val = parent_content.search(val).children.text
+          attr_vals += css_val.split("\n") if css_val
+        end
+
+        next if attr_vals.blank?
+        attr_vals.collect! { |e| e.strip.gsub(/\s+/, ' ') }.reject!(&:empty?)
+        job[set_key] = (set_key == SALARY) ? get_salary(attr_vals) : attr_vals.join("\n")
+      end
+
+      if job.present?
+        ImportJob.new.import_job(job)
+      end
+    rescue Exception => exp
+      Rails.logger.info exp.message
+      Rails.logger.info exp.backtrace.join("\n")
+    end
+  end
+
+  def get_salary(vals)
+    vals.collect!.with_index { |e,i| vals[i+1] if  %w(lương salary).any? { |s| e.downcase.include? s } }.compact
+
+    vals.join("")
+  end
+
+  def export_job
+    file_dir = [settings['exp_path'],"jobs.csv"].join("")
+    CSV.open(file_dir, "wb") do |csv|
+      csv << Job.attribute_names
+      Job.all.each do |user|
+        csv << user.attributes.values
+      end
+    end
+  end
+
+  def fetch_data
+    puts ExportJob.all
+  end
+end
+

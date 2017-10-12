@@ -1,0 +1,3 @@
+class CrawledUrl < ApplicationRecord
+
+end

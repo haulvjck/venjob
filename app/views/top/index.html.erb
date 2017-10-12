@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<style type="text/css">
+  /* Remove the navbar's default margin-bottom and rounded borders */
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+
+  .css_body {
+    text-align: center;
+  }
+  .right-text {
+    text-align: right;
+  }
+
+  /* Add a gray background color and some padding to the footer */
+  footer {
+    background-color: #f2f2f2;
+    padding: 25px;
+  }
+  @media screen and (min-device-width:698px) {
+    div#showgrid {
+      width: 720px;
+      margin: auto;
+    }
+  }
+
+  .top-page{
+    background-color: #C0C0C0;
+  }
+
+  .top-count {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+</style>
+<head>
+  <title>Top Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheets" type="text/css" href="stylesheets.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav col-sm-4">
+        <li class="active"><a href="#">Logo</a></li>
+        <li class="active"><a href="#">Logo</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right col-sm-3">
+        <li><a href="login"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+        <li><a href="register"><span></span>Register</a></li>
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav col-sm-4">
+        <li class="active"><a href="#">Logo</a></li>
+        <li class="active"><a href="#">Logo</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right col-sm-3">
+        <li><a href="#"><span class=""></span> Favorite</a></li>
+        <li><a href="history"><span class=""></span> History</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="top-page">
+  <div class="container">
+    <h1>Top Page</h1>
+    <p class="text-center top-count">Total jobs: <%= @total_jobs %></p>
+  </div>
+</div><br>
+
+<div class="container text-center">
+  <input type="text" size=50 name="search_txt" placeholder="input search text">    <button>Search</button>
+</div><br>
+
+<div class="jumbotron container-fluid bg-3 css_body">
+  <h3>LATEST JOBS</h3>
+  <%=render partial: 'latest_job_form', locals: {latest_jobs: @latest_jobs}%>
+</div><br>
+
+<div class="container-fluid bg-3">
+  <div class="tag text-center">TOP CITIES (9)</div>
+  <%=render partial: 'top_grid_form', locals: {category: 'city', value: @top_cities, has_count: true }%>
+  <br>
+  <div class ="right-text"><a href="cities" class="tag">ALL CITY (<%=@all_city%>)</a></div>
+</div><br>
+
+<div class="jumbotron container-fluid bg-3">
+  <div class="tag text-center">TOP INDUSTRIES (9)</div>
+  <%=render partial: 'top_grid_form', locals: {category: 'industry', value: @top_industries, has_count: true} %>
+  <br>
+  <div class ="right-text"><a href="industries" class="tag">ALL INDUSTRY (<%=@all_industry%>)</a></div>
+</div>
+
+<footer class="container-fluid text-center" style="background-color: gray;">
+  <p>Zigexn Ventura</p>
+</footer>
+
+</body>
+</html>
