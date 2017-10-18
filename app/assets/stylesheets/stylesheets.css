@@ -1,60 +1,168 @@
+.tags {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
 
-  .tags {
-    list-style: none;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-  }
+.tags li {
+  float: left;
+}
 
-  .tags li {
-    float: left;
-  }
+.tag {
+  background: #eee;
+  background-color: #CACFD2;
+  border-radius: 3px 0 0 3px;
+  color: black;
+  display: inline-block;
+  height: 40px;
+  width: 200px;
+  line-height: 40px;
+  padding: 0 20px 0 3px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+}
 
-  .tag {
-    background: #eee;
-    background-color: #CACFD2;
-    border-radius: 3px 0 0 3px;
-    color: black;
-    display: inline-block;
-    height: 40px;
-    width: 200px;
-    line-height: 40px;
-    padding: 0 20px 0 3px;
-    position: relative;
-    margin: 0 10px 10px 0;
-    text-decoration: none;
-    -webkit-transition: color 0.2s;
-  }
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 16px;
+  left: 10px;
+  position: absolute;
+      width: 6px;
+  top: 12px;
+}
 
-  .tag::before {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-    content: '';
-    height: 16px;
-    left: 10px;
-    position: absolute;
-        width: 6px;
-    top: 12px;
-  }
+.tag::after {
+  background: #fff;
+  border-bottom: 20px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 20px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 
-  .tag::after {
-    background: #fff;
-    border-bottom: 20px solid transparent;
-    border-left: 10px solid #eee;
-    border-top: 20px solid transparent;
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+.tag:hover {
+  background-color: #808000;
+  color: white;
+  cursor: pointer;
+}
 
-  .tag:hover {
-    background-color: #808000;
-    color: white;
-    cursor: pointer;
-  }
+.tag:hover::after {
+   border-left-color: #808000;
+}
 
-  .tag:hover::after {
-     border-left-color: #808000;
-  }
+  .top-page{
+  background-color: #C0C0C0;
+}
+
+.top-count {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.css_body {
+  text-align: center;
+}
+.right-text {
+  text-align: right;
+}
+
+.button-css {
+  padding-bottom: 15px;
+}
+.column {
+  text-align: left;
+  vertical-align: middle;
+  width: 100%;
+  height:120px;
+  margin: auto;
+}
+.job-title {
+  margin: 10px;
+  font-size: 16px;
+  font-weight: bold
+}
+.job-details {
+  margin: 15px;
+  font-size: 14px;
+}
+
+.border-row {
+  border-style: double;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+/** The Magic **/
+.btn-breadcrumb .btn:not(:last-child):after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-left: 10px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -17px;
+  left: 100%;
+  z-index: 3;
+}
+.btn-breadcrumb .btn:not(:last-child):before {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-left: 10px solid rgb(173, 173, 173);
+  position: absolute;
+  top: 50%;
+  margin-top: -17px;
+  margin-left: 1px;
+  left: 100%;
+  z-index: 3;
+}
+
+.text-title {
+  font-weight: bold;
+  color: blue;
+  font-style: italic;
+  font-size: 15px;
+}
+/** The Spacing **/
+.btn-breadcrumb .btn {
+  padding:6px 12px 6px 24px;
+}
+.btn-breadcrumb .btn:first-child {
+  padding:6px 6px 6px 10px;
+}
+.btn-breadcrumb .btn:last-child {
+  padding:6px 18px 6px 24px;
+}
+
+/** Primary button **/
+.btn-breadcrumb .btn.btn-primary:not(:last-child):after {
+  border-left: 10px solid #428bca;
+}
+.btn-breadcrumb .btn.btn-primary:not(:last-child):before {
+  border-left: 10px solid #357ebd;
+}
+.btn-breadcrumb .btn.btn-primary:hover:not(:last-child):after {
+  border-left: 10px solid #3276b1;
+}
+.btn-breadcrumb .btn.btn-primary:hover:not(:last-child):before {
+  border-left: 10px solid #285e8e;
+}

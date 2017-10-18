@@ -1,4 +1,4 @@
-class TopController < ActionController::Base
+class TopController < ApplicationController
   def index
     @top_cities = City.joins(:locations => :jobs).select("cities.id, cities.name, count(*) job_count").group("cities.id, cities.name").order("count(*) desc").limit 9
     @all_city = City.count

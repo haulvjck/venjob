@@ -7,6 +7,9 @@
     border-radius: 0;
   }
 
+  .css_body {
+    text-align: center;
+  }
   .right-text {
     text-align: right;
   }
@@ -23,7 +26,17 @@
     }
   }
 
+  .top-page{
+    background-color: #C0C0C0;
+  }
+
+  .top-count {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
 </style>
+
 <head>
   <title>Top Page</title>
   <meta charset="utf-8">
@@ -60,35 +73,29 @@
   </div>
 </nav>
 
-
 <div class="top-page">
   <div class="container">
-    <h1>CITY LIST</h1>
-    <div class="=row text-center">
-      <a href="#vn_city" class="col-sm-6">
-        <div class="tag"> VIET NAM</div>
-      </a>
-      <a href="#inter_city" class="col-sm-6">
-        <div class="tag">INTERNATIONAL</div>
-      </a>
-    </div>
+    <h1>More Jobs</h1>
   </div>
 </div><br>
 
-  <div class="container-fluid bg-3">
-    <div class="tag text-center" id="vn_city">VIET NAM</div>
-    <%= render partial: 'form_template/job_by_category_form', locals: {category: 'city', value: @vn_cities}%>
-  </div><br>
+<div class="container text-center">
+  <input type="text" size=50 name="search_txt" placeholder="input search text">    <button>Search</button>
+</div><br>
 
-  <div class="jumbotron container-fluid bg-3">
-    <div class="tag text-center" id="inter_city">INTERNATIONAL</div>
-    <%= render partial: 'form_template/job_by_category_form', locals: {category: 'city', value: @inter_cities} %>
-    <br>
+<div class="container-fluid bg-3">
+  <div class="tag text-center">Total: <%= jobs.count%> </div>
+  <div class="tag text-center">Result for: <%= search%></div>
+  <div class="right-text"><%= will_paginate jobs %></div>
+  <div class="jumbotron">
+    <%=render partial: 'form_template/job_list', locals: {value: jobs}%>
   </div>
+  <div class="right-text"><%= will_paginate jobs %></div>
+</div><br>
 
-  <footer class="container-fluid text-center" style="background-color: gray;">
-    <p>Zigexn Ventura</p>
-  </footer>
+<footer class="container-fluid text-center" style="background-color: gray;">
+  <p>Zigexn Ventura</p>
+</footer>
 
 </body>
 </html>

@@ -1,0 +1,67 @@
+<style type="text/css">
+  .row {
+    width: 90%;
+    margin: auto;
+  }
+
+  .row-dl {
+    width: 90%;
+    margin: auto;
+    background-color: white;
+  }
+
+  @media (min-device-width: 698px) {
+    .column {
+      width: 100%;
+      height: 130px;
+      display: inline;
+      float: left;
+    }
+  }
+/*
+  .column {
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
+    height:120px;
+    margin: auto;
+  }
+  .job-title {
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold
+  }
+  .job-details {
+    margin: 15px;
+    font-size: 14px;
+  }*/
+
+/*  .border-row {
+    border-style: double;
+    margin-bottom: 15px;
+  }*/
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheets" type="text/css" href="stylesheets.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </title>
+</head>
+<body>
+  <% for i in 0..job_size-1 do %>
+  <% break if i >= jobs.length%>
+    <div class="row <%= i%2==0? 'row-dl' : ''%> well">
+      <div class="column">
+        <span class="job-title" title="<%=jobs[i].title %>"> &#8226; <%= link_to truncate(jobs[i].title.upcase, :separator => ' ',  :omission => '...', :length => 60), job_detail_path(:id => jobs[i].id)%> </span><br>
+        <span class="job-details"><%= truncate(jobs[i].full_desc, :separator => ' ', :omission => '...', :length => 200) %></span><br>
+        <span class="job-details">- Location: <%= truncate(jobs[i].address, :separator => ' ', :omission => '...', :length => 200) %></span><br>
+        <span class="job-details">- Salary: <%= truncate(jobs[i].salary, :separator => ' ', :omission => '...', :length => 200) %></span>
+      </div>
+    </div>
+  <% end %>
+</body>
+</html>

@@ -4,7 +4,7 @@
     margin: 25px;
   }
 
-/*  .tags {
+  .tags {
     list-style: none;
     margin: 0;
     overflow: hidden;
@@ -62,7 +62,7 @@
 
   .tag:hover::after {
      border-left-color: #808000;
-  }*/
+  }
 </style>
 <!DOCTYPE html>
 <html>
@@ -73,11 +73,11 @@
   <% return if value.blank? %>
   <% for i in 0..value.length/3 do %>
     <div class="text-center">
-    <% for j in 0..2 do %>
+    <% for j in 0..3 do %>
       <%break if i*3 + j>= value.length%>
-      <div class="col-sm-4">
-        <a href="<%= category == 'city'? city_jobs_path(:city_id => value[i*3 + j].id) : industry_jobs_path(:industry_id => value[i*3 + j].id) %>" class="tag">
-          <%= [value[i*3 + j].name.upcase, "(#{value[i*3 + j].job_count})"].join(" ")%>
+      <div class="col-sm-3">
+        <a href="<%= category == 'city'? city_path(:id => value[i*3 + j].id) : industry_path(:id => value[i*3 + j].id) %>" class="tag">
+          <%= value[i*3 + j].name.upcase%>
         </a>
         <br>
       </div>

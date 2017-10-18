@@ -1,0 +1,55 @@
+<style>
+  body {
+    margin: 15px;
+  }
+
+  .row {
+    width: 100%;
+    margin-bottom: 15px;
+    /*border-style: double;*/
+
+  }
+
+  .row-dl {
+    width: 100%;
+    margin-bottom: 15px;
+    /*border-style: double;*/
+    background-color: white;
+  }
+
+</style>
+<!DOCTYPE html>
+<html>
+<script type="text/javascript">
+function add_favorite(id){
+  console.log(id);
+}
+</script>
+<head>
+  <title></title>
+</head>
+<body>
+  <% return if value.blank? %>
+  <% for i in 0..19 do %>
+    <% break if i >= value.length %>
+      <div class="container-fluid">
+        <div class="col-md-11 well">
+          <div class="row <%= i%2==0? 'row-dl' : ''%>">
+            <%=link_to value[i].title, job_detail_path(:id => value[i].id), class: 'col-md-12'%>
+            <br>
+            <div class="col-md-12">&#10004; <%= value[i].full_desc%></div>
+            <br>
+            <br>
+            <div class="col-md-9">&#10004; Location: <%= value[i].address%></div>
+            <div class="col-md-2">&#10004; Salary: <%= value[i].salary%></div>
+            <br>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button title="Mark this job as favorite job" class="btn btn-primary btn-lg" onclick="add_favorite(<%=value[i].id%>)">Favorite</button>
+        </div>
+        <br>
+      </div>
+  <% end %>
+</body>
+</html>
