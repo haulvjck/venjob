@@ -13,3 +13,19 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+$(document).ready(function(){
+    // $("input[type='button']").click(function(){
+    // });
+});
+
+function add_favorite(job_id){
+  // console.log(id);
+}
+
+function applying_job(current_user, job_id) {
+  var jobId = $("input[name='my_job']:checked").val();
+        if(jobId){
+            console.log(jobId);
+            // TODO apply job
+        }
+}

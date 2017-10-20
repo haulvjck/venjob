@@ -4,6 +4,7 @@ class Job < ApplicationRecord
   has_many :user_jobs
   has_many :job_industries
 
+  FAVORITE = 'favorite'
   self.per_page = 20
   scope :jobs_by_city, -> (city_id) { joins(:location => :city).where({ cities: { id: city_id } }) }
   scope :jobs_by_industry, -> (industry_id) { joins(:job_industries => :industry).where({ industries: { id: industry_id } }) }

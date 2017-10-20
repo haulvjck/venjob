@@ -1,3 +1,19 @@
+@media screen and (min-device-width:698px) {
+  div#showgrid {
+    width: 720px;
+    margin: auto;
+  }
+}
+
+.bg-img {
+  background-image: url("/images/bg-header.jpg");
+}
+
+.header-style{
+  background-color: #A4BECE;
+  background-image: url("/images/bg-header-1.jpg");
+}
+
 .tags {
   list-style: none;
   margin: 0;
@@ -11,6 +27,7 @@
 
 .tag {
   background: #eee;
+  font-size: 11px;
   background-color: #CACFD2;
   border-radius: 3px 0 0 3px;
   color: black;
@@ -58,8 +75,8 @@
    border-left-color: #808000;
 }
 
-  .top-page{
-  background-color: #C0C0C0;
+.top-page{
+  background-color: #CACFD2;
 }
 
 .top-count {
@@ -165,4 +182,36 @@
 }
 .btn-breadcrumb .btn.btn-primary:hover:not(:last-child):before {
   border-left: 10px solid #285e8e;
+}
+
+.footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:30px;
+   width:100%;
+   /*background:#f2f2f2;*/
+   background-color: #A4BECE;
+   padding: 25px;
+   text-align: center;
+   vertical-align: middle;
+}
+
+.row {
+  width: 90%;
+  margin: auto;
+}
+
+.row-dl {
+  width: 90%;
+  margin: auto;
+  background-color: white;
+}
+
+.column-job {
+  height: 130px;
+  display: inline;
+  float: left;
+  text-align: left;
+  margin-left: 20px;
 }

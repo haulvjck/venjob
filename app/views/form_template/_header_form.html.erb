@@ -1,0 +1,24 @@
+<div class="jumbotron well header-style">
+  <div class="container-fluid well bg-img">
+    <div class="col-md-1"> <%= link_to image_tag("/images/logo.jpg", class: "img-circle", size: "140x120"), "/" %></div>
+    <div class="col-md-9"></div>
+    <div class="col-md-2">
+      <div class="row">
+      <% if user_signed_in? %>
+        <div class="col-sm-6"><%= link_to image_tag("/images/my-page.png", size: "60x60", title: "My page"), my_page_path %></div>
+        <div class="col-sm-6"><%= link_to image_tag("/images/sign_out.png", size: "60x60", title: "Sign out"), destroy_user_session_path, method: :delete %></div>
+      <% else %>
+        <div class="col-sm-6"><%= link_to image_tag("/images/sign_in.png", size: "60x60", title: "Sign in"), new_user_session_path %></div>
+        <div class="col-sm-6"><%= link_to image_tag("/images/register.png", size: "60x45", title: "Register new"), new_user_registration_path %></div>
+      <% end %>
+      </div> <br>
+
+      <div class="row">
+        <% @favorite_count ||= 0 %>
+        <div class="col-sm-6"><%= link_to image_tag("/images/favorite.png", title: "Favorite (#{@favorite_count})", size: "60x60"), favorite_path %></div>
+        <% @history_count ||= 0 %>
+        <div class="col-sm-6"><%= link_to image_tag("/images/history.png", size: "60x60", title: "History (#{@history_count})"), history_path %></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<%= javascript_include_tag 'application' %>
+<script type="text/javascript">
+  var user_id = <%= current_user.id %>;
+  var job_id = 10;
+</script>
+<% return if value.blank? %>
+<div class="container-fluid">
+<% for i in 0..19 do %>
+  <% break if i >= value.length %>
+  <div class="container-fluid">
+    <div class="col-md-1 right-text">
+      <%= radio_button_tag("my_job", value[i].id, checked = false) %>
+    </div>
+
+    <div class="col-md-10 well">
+      <% if is_favorite %>
+        <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;'>x</span>
+      <% end %>
+      <div class="row <%= i%2==0? 'row-dl' : 'row'%>">
+        <%=link_to value[i].title, job_detail_path(:id => value[i].id), class: 'col-md-12'%>
+        <br>
+        <div class="col-md-12">&#10004; <%= truncate(value[i].full_desc, :separator => ' ', :omission => '...', :length => 200) %></div>
+        <br><br>
+        <div class="col-md-9">&#10004; Location: <%= value[i].address%></div>
+        <div class="col-md-2">&#10004; Salary: <%= value[i].salary%></div>
+        <br>
+      </div>
+
+    </div>
+  </div>
+<% end %>
+
+<div class="well container-fluid text-center">
+  <div class="col-md-4"></div>
+  <div class="col-md-4 button-css">
+    <button type="button" onclick="applying_job(user_id, job_id)" class="btn btn-primary btn-lg">&nbsp;&nbsp;Apply&nbsp;&nbsp;</button>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+</div>
