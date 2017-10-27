@@ -1,0 +1,19 @@
+$(document).ready(function(){
+    $("input[name='my_job']").change(function(){
+        $('button#apply_my_form_btn').prop('disabled', false);
+        var jobId = get_selected_job();
+        $.get("<%= apply_path %>", {id: jobId}).done(function(response){
+          debugger
+        }
+    })
+});
+
+function get_selected_job() {
+    var jobId = $("input[name='my_job']:checked").val();
+
+    if(jobId){
+        return jobId
+    } else {
+        alert("Please chose a specific job to apply");
+    }
+}

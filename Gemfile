@@ -40,6 +40,13 @@ gem 'sanitize'
 gem 'selenium-webdriver'
 gem 'devise'
 gem 'logger'
+gem 'will_paginate', '~> 3.1.0'
+gem 'sidekiq'
+gem 'arel-helpers'
+gem 'impressionist'
+gem 'carrierwave'
+gem 'rsolr'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -59,6 +66,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry'
+  gem "letter_opener"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

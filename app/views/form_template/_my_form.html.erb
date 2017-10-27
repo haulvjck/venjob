@@ -1,28 +1,42 @@
-<%= javascript_include_tag 'application' %>
 <script type="text/javascript">
-  var user_id = <%= current_user.id %>;
-  var job_id = 10;
+  var user_id = <%= (current_user.id if user_signed_in?) || "" %> ;
+
+  $(document).ready(function(){
+    $("input[name='my_job']").change(function(){
+        $('button#apply_my_form_btn').prop('disabled', false);
+        var jobId = get_selected_job();
+        document.getElementById("apply_my_form_btn").childNodes[1].action = '<%= apply_path %>' + '?job_id=' + jobId;
+    })
+  });
 </script>
+
 <% return if value.blank? %>
 <div class="container-fluid">
-<% for i in 0..19 do %>
-  <% break if i >= value.length %>
-  <div class="container-fluid">
-    <div class="col-md-1 right-text">
-      <%= radio_button_tag("my_job", value[i].id, checked = false) %>
+<% i = 0 %>
+<% value.each do |job| %>
+  <% break if i >= 20 %>
+  <div class="container-fluid well">
+    <div class="container-fluid">
+      <div class="radio-button-css">
+        <%= radio_button_tag("my_job", job.id, checked = false) %>
+      </div>
+      <div class="remove-favorite-css">
+        <% if is_favorite %>
+          <span id='remove_favorite' onclick='removeFavorite(this.parentNode.parentNode.parentNode, user_id, <%= job.id %>)'>
+            <%= image_tag('/images/close.png', size: "25x25", title: "Remove this favorite job") %>
+          </span>
+        <% end %>
+      </div>
     </div>
 
-    <div class="col-md-10 well">
-      <% if is_favorite %>
-        <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;'>x</span>
-      <% end %>
+    <div class="container-fluid">
       <div class="row <%= i%2==0? 'row-dl' : 'row'%>">
-        <%=link_to value[i].title, job_detail_path(:id => value[i].id), class: 'col-md-12'%>
+        <%=link_to job.title, job_detail_path(:id => job.id), class: 'col-md-12'%>
         <br>
-        <div class="col-md-12">&#10004; <%= truncate(value[i].full_desc, :separator => ' ', :omission => '...', :length => 200) %></div>
+        <div class="col-md-12">&#10004; <%= truncate(job.short_desc, :separator => ' ', :omission => '...', :length => 200) %></div>
         <br><br>
-        <div class="col-md-9">&#10004; Location: <%= value[i].address%></div>
-        <div class="col-md-2">&#10004; Salary: <%= value[i].salary%></div>
+        <div class="col-md-9">&#10004; Location: <%= job.address%></div>
+        <div class="col-md-2 salary-css">&#10004; Salary: <%= job.salary%></div>
         <br>
       </div>
 
@@ -33,7 +47,9 @@
 <div class="well container-fluid text-center">
   <div class="col-md-4"></div>
   <div class="col-md-4 button-css">
-    <button type="button" onclick="applying_job(user_id, job_id)" class="btn btn-primary btn-lg">&nbsp;&nbsp;Apply&nbsp;&nbsp;</button>
+    <div id='apply_my_form_btn'>
+      <%= button_to raw("&nbsp;&nbsp;Apply&nbsp;&nbsp;"), apply_path, :class => 'btn btn-primary btn-lg'%>
+    </div>
   </div>
   <div class="col-md-4"></div>
 </div>

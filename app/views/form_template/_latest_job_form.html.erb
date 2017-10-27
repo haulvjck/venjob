@@ -1,0 +1,16 @@
+<% i = 0 %>
+<% jobs.each do |job|%>
+  <div class="row <%= i%2==0? 'row-dl' : ''%> well">
+    <div class="column-job">
+      <span class="job-title" title="<%=job.title %>">
+        <%= image_tag("/images/point-hand.png", size: "25x25")%>
+        <%= link_to truncate(job.title, :separator => ' ',  :omission => '...', :length => 60), job_detail_path(:id => job.id)%>
+      </span><br>
+      <span class="job-details">&#10004; Description: <%= truncate(job.short_desc, :separator => ' ', :omission => '...', :length => 200) %></span><br>
+      <span class="job-details">&#10004; Location: <%= job.address %></span><br>
+      <span class="job-details">&#10004; City: <%= job.city_name %></span><br>
+      <span class="job-details">&#10004; Salary: <%= truncate(job.salary, :separator => ' ', :omission => '...', :length => 200) %></span>
+    </div>
+  </div>
+  <% i +=1 %>
+<% end %>

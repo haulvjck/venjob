@@ -7,10 +7,14 @@ class CareerJob < Base
   JOB_URL_PARTERN = /^[\w|\W]+tim-viec-lam[\w|\W]+.html$/
   PAGE_URL_PATERN = /^([\w|\W]+tat-ca-viec-lam-trang-)([\d]+)(-vi.html)$/
   FIRST_PAGE = 'https://careerbuilder.vn/viec-lam/tat-ca-viec-lam-trang-1-vi.html'
+  DESCRIPTION = 'description'
+  JOB_DETAILS = 'job_details'
 
   def crawl
     success_urls = []
     urls = get_urls
+
+    puts urls.length
 
     urls.each do |url|
       content = get_page(url)
@@ -57,37 +61,46 @@ class CareerJob < Base
     return if parent_content.empty?
 
     setting['tags'].each do |set_key, set_val|
-      attr_vals = []
 
-      set_val.split(',').each do |val|
-        css_val = parent_content.search(val).children.text
-        attr_vals += escape_array(css_val) if css_val
+      css_val = parent_content.search(set_val).children.text
+      case set_key
+      when DESCRIPTION
+        css_val = parent_content.css(set_val).inner_html
+        job[set_key] = escape_string(css_val) if css_val
+      when JOB_DETAILS
+        job.merge!(get_job_detail(css_val)) if css_val
+      else
+        job[set_key] = escape_string(css_val) if css_val
       end
-
-      next if attr_vals.blank?
-      job[set_key] = (set_key == SALARY) ? get_salary(attr_vals) : attr_vals.join("\n")
     end
 
     if job.present?
       ImportJob.new.import_job(job)
     end
-
   rescue Exception => exp
     Rails.logger.info exp.message
     Rails.logger.info exp.backtrace.join("\n")
   end
 
   # string to array and escape specical character
-  def escape_array(str)
-    return [] if str.blank?
-
-    str.split("\n").collect! { |e| e.strip.gsub(/\s+/, ' ') }.compact.reject(&:empty?)
+  def escape_string(str)
+    str.strip.gsub(/\s+/, ' ')
   end
 
-  def get_salary(vals)
-    vals.collect!.with_index { |e,i| vals[i+1] if  %w(lương salary).any? { |s| e.downcase.include? s } }.compact
+  def get_job_detail(vals)
+    return {} if vals.blank?
 
-    vals.join("")
+    job_details = {}
+
+    keys = ["Nơi làm việc", "Cấp bậc", "Kinh nghiệm", "Lương", "Ngành nghề", "Hết hạn nộp"]
+    settings['job_patern'].each do |field, field_patern|
+      reg_val = vals.match(Regexp.new(field_patern))
+      val = (reg_val[3] || "").split(":").first if reg_val
+      pattern = /\b(?:#{ Regexp.union(keys).source })\b/
+      job_details[field] = val.gsub(pattern, '').squeeze(' ').strip
+    end
+
+    job_details
   end
 end
 

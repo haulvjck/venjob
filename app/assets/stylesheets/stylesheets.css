@@ -109,7 +109,8 @@
 .job-title {
   margin: 10px;
   font-size: 16px;
-  font-weight: bold
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
 }
 .job-details {
   margin: 15px;
@@ -214,4 +215,34 @@
   float: left;
   text-align: left;
   margin-left: 20px;
+}
+
+.radio-button-css {
+  text-align: left;
+  margin-left: -30px;
+  margin-top: -18px;
+}
+
+.remove-favorite-css {
+  text-align: right;
+  margin-right: -30px;
+  margin-top: -20px;
+  cursor: pointer;
+}
+
+.salary-css {
+  text-align: right;
+  /*margin-left: 100px*/
+}
+
+.navigate-apply{
+  width: 200px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.navigate-apply-disable{
+  width: 200px;
+  font-size: 15px;
+  color: silver;
 }

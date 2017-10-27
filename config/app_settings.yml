@@ -1,6 +1,7 @@
 jobs:
   benefit: 'benefit'
   description: 'full_desc'
+  short_desc: 'short_desc'
   name: 'name'
   salary: 'salary'
   location_id: 'location_id'
@@ -22,14 +23,22 @@ css_tree:
   tags:
     name: 'div.top-job-info'
     created_at: 'div.datepost'
-    'company province': '[itemprop="jobLocation"]'
-    title: 'div.top-job-info'
-    category: '[itemprop="industry"]'
-    salary: 'ul.DetailJobNew'
+    title: '[itemprop="title"]'
+    job_details: 'ul.DetailJobNew'
     benefit: 'ul.list-benefits'
-    description: '[itemprop="description"],[itemprop="experienceRequirements"]'
-    'company name': '[itemprop="name"]'
-    'company address': '[itemprop="addressLocality"]'
+    short_desc: '[itemprop="description"]'
+    description: 'div.MarBot20'
+    company name: 'div.tit_company'
+    company address: '[itemprop="addressLocality"]'
     introductions: '[id="emp_more"]'
 
 URL_BATCH_SIZE: 5000
+
+job_patern:
+  category: ^([\w|\W]*)(Ngành nghề:)([\w|\W]+)
+  salary: ^([\w|\W]*)(Lương:)([\w|\W]+)
+  company province: ^([\w|\W]*)(Nơi làm việc:)([\w|\W]+)
+
+solr_url: http://localhost:8983/solr/ven_job
+
+field_search: title, description, salary, company_name, city_name, introductions, address, industry

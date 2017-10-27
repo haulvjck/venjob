@@ -1,9 +1,7 @@
-<div class="jumbotron container-fluid well">
-  <div class="top-page">
+<div class="jumbotron container-fluid header-style">
     <div class="container">
       <p class="text-center top-count">Total jobs: <%= @total_jobs %></p>
     </div>
-  </div><br>
 
   <div class="container text-center">
     <input type="text" size=50 name="search_txt" placeholder="input search text">    <button>Search</button>
@@ -12,18 +10,18 @@
 
 <div class="jumbotron container-fluid bg-3 css_body">
   <h3>LATEST JOBS</h3>
-  <%=render partial: 'form_template/job_form', locals: {jobs: @latest_jobs, job_size: 5}%>
+  <%=render partial: 'form_template/latest_job_form', locals: {jobs: @latest_jobs}%>
 </div><br>
 
 <div class="container-fluid bg-3">
-  <div class="tag text-center">TOP CITIES (9)</div>
+  <div class="tag text-center">TOP CITIES (9)</div><br><br>
   <%=render partial: 'top_grid_form', locals: {category: 'city', value: @top_cities}%>
   <br>
   <div class ="right-text"><a href="cities" class="tag text-center">ALL CITY (<%=@all_city%>)</a></div>
 </div><br>
 
 <div class="jumbotron container-fluid bg-3">
-  <div class="tag text-center">TOP INDUSTRIES (9)</div>
+  <div class="tag text-center">TOP INDUSTRIES (9)</div><br><br>
   <%=render partial: 'top_grid_form', locals: {category: 'industry', value: @top_industries} %>
   <br>
   <div class ="right-text"><a href="industries" class="tag text-center">ALL INDUSTRY (<%=@all_industry%>)</a></div>

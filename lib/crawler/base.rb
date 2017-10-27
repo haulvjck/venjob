@@ -32,7 +32,7 @@ class Base
   end
 
   def parse_url(content, partern=nil)
-    return [] if content.nil?
+    return [] if content.blank?
 
     content.css('a').map {|element| element["href"] if element["href"].match(partern)}.compact
   end

@@ -1,0 +1,51 @@
+<div class="well">
+  <div class="row">
+    <div class="btn-group btn-breadcrumb">
+        <div class="btn btn-primary navigate-apply"> &#9312; New </div>
+        <div class="btn btn-primary navigate-apply">&#9313; Confirm</div>
+        <div class="btn navigate-apply-disable">&#9314; Finish</div>
+    </div>
+  </div>
+</div>
+<div class="container well">
+  <h2 class="text-center">Confirmation</h2><br><br><br>
+  <%= form_for "confirm_info", url: finish_apply_path, method: :post do |f| %>
+    <%= f.hidden_field :job_id, value: params['apply_info']['job_id']%>
+    <%= f.hidden_field :full_name, value: params['apply_info']['full_name']%>
+    <%= f.hidden_field :email, value: params['apply_info']['email']%>
+    <%= f.hidden_field :cv_path, value: params['apply_info']['cv_path']%>
+
+    <div class="field col-md-12">
+      <div class="col-md-2">
+        <%= image_tag("/images/point-hand.png", size: "25x25")%>&nbsp;&nbsp;<%= f.label :full_name, 'Full Name' %>
+      </div>
+
+      <div class="col-md-10">
+        <%= f.label :full_name_value, params['apply_info']['full_name'] %>
+      </div>
+  </div><br><br>
+
+    <div class="field col-md-12">
+      <div class="col-md-2">
+        <%= image_tag("/images/point-hand.png", size: "25x25")%>&nbsp;&nbsp;<%= f.label :email, 'Email' %>
+      </div>
+      <div class="col-md-10">
+        <%= f.label :email_value, params['apply_info']['email'] %>
+      </div>
+    </div><br><br>
+
+    <div class="field col-md-12">
+      <div class="col-md-2">
+        <%= image_tag("/images/point-hand.png", size: "25x25")%>&nbsp;&nbsp; <%= f.label :cv_path, 'CV Uploaded' %>
+      </div>
+      <div class="col-md-10">
+        <%= f.label :cv_path_value, params['apply_info']['cv_path'] %>
+      </div>
+    </div><br><br>
+
+    <div class="actions text-center">
+      <div class="col-md-5"> <%= f.submit "Edit" %></div>
+      <div class="col-md-5"><%= f.submit "Done" %></div>
+    </div>
+  <% end %><br>
+</div>

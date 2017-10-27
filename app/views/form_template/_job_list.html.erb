@@ -1,24 +1,25 @@
-<%= javascript_include_tag 'application' %>
+<script type="text/javascript">
+  var user_id = <%= current_user.id if current_user%>;
+</script>
 
 <% return if value.blank? %>
-<% for i in 0..19 do %>
-  <% break if i >= value.length %>
-  <div class="container-fluid">
-    <div class="col-md-11 well">
-      <div class="row <%= i%2==0? 'row-dl' : 'row'%>">
-        <%=link_to value[i].title, job_detail_path(:id => value[i].id), class: 'col-md-12'%>
-        <br>
-        <div class="col-md-12">&#10004; <%= value[i].full_desc%></div>
-        <br>
-        <br>
-        <div class="col-md-9">&#10004; Location: <%= value[i].address%></div>
-        <div class="col-md-2">&#10004; Salary: <%= value[i].salary%></div>
-        <br>
+<% i = 0%>
+<% value.each do |job| %>
+  <div class="container-fluid well">
+      <div class="remove-favorite-css">
+        <span id='mark_favorite' onclick='markFavorite(user_id, <%= job.id %>)'>
+              <%= image_tag('/images/mark-favorite.png', size: "25x25", title: title="Mark this job as favorite job") %>
+        </span>
       </div>
-    </div>
-    <div class="col-md-1">
-      <button title="Mark this job as favorite job" class="btn btn-primary btn-lg" onclick="add_favorite(<%=value[i].id%>)">Favorite</button>
-    </div>
+      <div class="row <%= i%2==0? 'row-dl' : 'row'%>">
+        <%= image_tag("/images/point-hand.png", size: "25x25")%>
+        <%= link_to job.title, job_detail_path(:id => job.id) %><br>
+        <div class="col-md-12">&#10004; Job description: <%= job.short_desc%></div><br><br>
+        <div class="col-md-7">&#10004; Location: <%= job.address%></div>
+        <div class="col-md-3">&#10004; City: <%= job.city_name%></div>
+        <div class="col-md-2">&#10004; Salary: <%= job.salary%></div><br>
+      </div>
     <br>
   </div>
+  <% i += 1 %>
 <% end %>

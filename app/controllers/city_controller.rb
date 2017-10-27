@@ -1,7 +1,7 @@
 class CityController < ApplicationController
   def index
-    @vn_cities = City.joins(:locations).where("`country` like 'VietNam'").distinct(:name)
+    @vn_cities = City.includes(:locations).city_by_country('VietNam')
 
-    @inter_cities = City.limit 3
+    @inter_cities = City.includes(:locations).city_by_country('International')
   end
 end

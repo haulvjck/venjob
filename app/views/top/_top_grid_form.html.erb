@@ -1,17 +1,19 @@
 <% return if value.blank? %>
 
-<% for i in 0..value.length/3 do %>
-  <div class="text-center container-fluid">
-  <% for j in 0..2 do %>
-    <%break if i*3 + j>= value.length%>
-    <div class="col-sm-4">
-      <% tag_name = [value[i*3 + j].name.upcase, "(#{value[i*3 + j].job_count})"].join(" ") %>
+<% i = 0 %>
+<div class="container-fluid">
+<% value.each do |cate| %>
+  <div class="text-center">
+  <%break if i >= 9 %>
+    <div class="col-md-4">
+      <% tag_name = [cate.name.upcase, "(#{cate.job_count})"].join(" ") %>
       <% if category == 'city' %>
-        <%= link_to tag_name, city_jobs_path(:city_id => value[i*3 + j].id), class: 'tag' %>
+        <%= link_to tag_name, city_jobs_path(:city_id => cate.id), class: 'tag' %>
       <% else %>
-        <%= link_to tag_name, industry_jobs_path(:industry_id => value[i*3 + j].id) ,class: 'tag'%>
-      <% end %>
+        <%= link_to tag_name, industry_jobs_path(:industry_id => cate.id) ,class: 'tag'%>
+      <% end %><br><br><br>
     </div>
-    <% end %>
-  </div> <br>
+  </div>
+  <% i += 1 %>
 <% end %>
+</div>

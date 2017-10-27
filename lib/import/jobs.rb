@@ -66,13 +66,13 @@ class ImportJob
     job_h = {}
     loc_h = {}
 
-    loc_h[:city_id] = import_city(job)
+    loc_h[:city_id] = import_city(job).id if import_city(job)
     loc_h[:country] ||= VIETNAM
     loc_h[:district] = job['company district']
     loc_h[:address] = job['company address']
     job['location_id'] = Location.create!(loc_h).id
 
-    job_h[:company_id] = import_company(job).id
+    job_h[:company_id] = import_company(job).id if import_company(job)
     settings['jobs'].select{|key, val| job_h[val.to_sym] = job[key] }
     job_h[:created_at] = DateTime.parse(job['created_at']).strftime('%F') if job['created_at']
     job_h[:title] ||= job_h[:name]
@@ -94,7 +94,7 @@ class ImportJob
     return if inds.blank?
 
     ind_ids = []
-    inds.split("\n").each do |ind_name|
+    inds.split(",").each do |ind_name|
       ind_name = remove_character(ind_name)
       industry = Industry.find_or_create_by(name: ind_name)
       ind_ids << industry.id
@@ -104,34 +104,24 @@ class ImportJob
   end
 
   def import_city(job)
-    if job['company province'] || job['work place']
-      province = remove_character(job['company province']) || remove_character(job['work place'])
-      city = City.find_or_create_by(name: province)
-      return city.id
+    city = if job['company province'] || job['work place']
+      province = remove_character(job['company province'].split(",").first) || remove_character(job['work place'].split(",").first)
+      City.find_or_create_by(name: province)
     end
-
-    return
   end
 
   def import_company(job)
-    if job['company name']
-      company = Company.create_with(
+    company = if job['company name']
+      Company.create_with(
           location_id: job['location_id'],
           company_id: job['company id'],
           name: job['company name'],
           introductions: job['introductions']
       ).find_or_create_by(name: job['company name'])
-
-      return company
     end
-
-    return
   end
 
   def remove_character(name)
-    return if name.nil?
-
-    name.downcase.gsub(/[\W]+/,' ')
+    name.downcase.strip if name
   end
-
 end
