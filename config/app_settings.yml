@@ -32,13 +32,21 @@ css_tree:
     company address: '[itemprop="addressLocality"]'
     introductions: '[id="emp_more"]'
 
-URL_BATCH_SIZE: 5000
+URL_BATCH_SIZE: 50
 
 job_patern:
   category: ^([\w|\W]*)(Ngành nghề:)([\w|\W]+)
   salary: ^([\w|\W]*)(Lương:)([\w|\W]+)
   company province: ^([\w|\W]*)(Nơi làm việc:)([\w|\W]+)
 
-solr_url: http://localhost:8983/solr/ven_job
+solr_url: http://localhost:8983/solr/venjob
 
-field_search: title, description, salary, company_name, city_name, introductions, address, industry
+field_search:
+  title: 7
+  description: 6
+  company_name: 5
+  city_name: 4
+  introductions: 3
+  address: 2
+  industry: 5
+  salary: 1

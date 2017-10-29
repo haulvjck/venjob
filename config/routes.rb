@@ -3,8 +3,6 @@ Rails.application.routes.draw do
       # sessions: 'users/sessions',
       # registrations: 'users/registrations',
   }
-  # require 'sidekiq/web'
-  # mount Sidekiq::Web => '/sidekiq'
   get 'top/index'
   get 'detail/:id' => 'job#show', as: :job_detail
   get 'favorite' => 'users/my_page#favorite', as: :favorite

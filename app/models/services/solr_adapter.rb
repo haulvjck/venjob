@@ -2,7 +2,7 @@ require 'rsolr'
 
 module Solr
   class SolrAdapter
-    def initialize(keyword=nil)
+    def initialize(keyword)
       @solr = RSolr.connect(
         :url => settings['solr_url'],
         :read_timeout => 600,
@@ -30,44 +30,55 @@ module Solr
           industry: job.industries.collect{|i| i.name }.join(",")
         }
       end
-
       @solr.add  jobs
     end
 
     def query_all
-      q = settings['field_search'].split(',').collect{ |field| [field, @keyword].join(':')}.join(" OR ")
-      h = {
-        "q" => q
-      }
+      q = "*:*"
 
-      request(h)
+      if @keyword.present?
+        keyword = @keyword.gsub(/[\s]/,"+")
+        q = settings['field_search'].collect {|field,score| "#{field}:\"#{keyword}\"^#{score}"}
+      end
+      request(q)
+
     end
 
     def query_by_location
-      h = {
-        "q" => "address:#{@keyword} OR city_name:#{@keyword}"
-      }
+      q = "*:*"
+      if @keyword.present?
+        keyword = escape_string(@keyword)
+        q = "address:\"#{keyword}\"^2 OR city_name:\"#{keyword}\"^1"
+      end
 
-      request(h)
+      request(q)
     end
 
     def query_by_company
-      h = {
-        "q" => "company_name:#{@keyword}"
-      }
-
-      request(h)
+      q = "*:*"
+      if @keyword.present?
+        keyword = escape_string(@keyword)
+        q = "company_name:\"#{keyword}\"^3 OR introductions:\"#{keyword}\"^2 OR title:\"#{keyword}\"^1"
+      end
+      request(q)
     end
 
-    def request(query)
-      uri = [@solr.uri.to_s, 'select?', query].join("")
+    def request(q)
+      h = {
+        "q" => q
+      }
+      uri = @solr.build_request 'select', :params => h
       Rails.logger.info "SolrUrl: #{uri}"
       start = Time.now
-      response = @solr.get 'select', :params => query
+      response = @solr.get 'select', :params => h
       request_time = Time.now - start
 
       Rails.logger.info "Request Time: #{request_time} seconds"
       response
+    end
+
+    def escape_string(str)
+      str.gsub(/[\-+\/\"]+/,"")
     end
   end
 end

@@ -1,10 +1,24 @@
+require 'services/solr_adapter'
+
 class JobController < ApplicationController
   impressionist actions: [:show]
+  include Solr
 
   def index
-    @search = params[:search] || ""
+    @search = params[:search].to_s || ""
+    search_type = params[:type] || ""
+    @solr = ::Solr::SolrAdapter.new(@search)
 
-    @jobs = Job.includes(:location => :city).paginate(:page => params[:page])
+    @jobs = case search_type.downcase
+    when Job::LOCATION
+      @solr.query_by_location
+    when Job::COMPANY
+      @solr.query_by_company
+    else
+      @solr.query_by_all
+    end
+    binding.pry
+    puts "sdsaasv"
   end
 
   def show
